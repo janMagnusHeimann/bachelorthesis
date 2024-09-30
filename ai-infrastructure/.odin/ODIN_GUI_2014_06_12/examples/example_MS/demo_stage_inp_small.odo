@@ -1,0 +1,66 @@
+
+ **********************************************************************************************
+                M T  A E R O S P A C E    O D I N  V10p3 
+
+   written/updated by Dr. Thomas Link 21.02.2017
+   Call:
+   odin_V10p3 -if demo_stage_inp_small.txt -of demo_stage_inp_small.odo -specf C:\EXECUT~1\ODIN_G~1\bin\..\lib\default.spec -sof demo_stage_inp_small.sof 
+ **********************************************************************************************
+ ******************************* I n p u t  P a r a m e t e r s *******************************
+Component Section
+Component start
+// ID;            Name;     Type; Mode;Stiff; StiffGeo;  Mat; LoadX;      R;          L;     DimC3;     DimC4;     DimC5;       msf
+Component end
+
+Stiffening Geometry Section
+StiffGeo start
+//StiffGeo;       Name;        t;       Dim1;       Dim2;       Dim3;       Dim4;       Dim5;       Dim6;       Dim7;       Dim8;       Dim9
+StiffGeo end
+
+Material Section
+Material start
+//Mat;          Name;    Rp02;       Rm;       E;       G;     nu;        dens
+  1;             cfk;   754.10;   754.10;   73548;   28701;   0.30;  1.6000e+001
+Material end
+
+Load Section
+Load start
+//Load;          Name;    Pint;    Pout;      Flux;   Temp; FOSYield;   FOSULT;    FOSlB;    FOSgB;    MatID
+   1;      loadcase_1;   0.000;   0.000;    -125.0;   20.0;    1.250;    1.250;    1.500;    1.310;      1
+Load end
+
+StageCollector Section
+Collector start
+//ID;      Name;   CompID; Orientation; ParentID; IFID; IFParentID;    VolX;    elSizeAx; ncirc  
+Collector end
+***********************************************************************************************
+
+**************** C o m p o n e n t  R e s u l t s *********************************************
+
+************************* O p t i m a l  D i m e n s i o n s **********************************
+Opt minimum Dimensions start
+//CompID; StiffID;         Name;       t;         Dim1;       Dim2;       Dim3;       Dim4;       Dim5;       Dim6;       Dim7;       Dim8;       Dim9
+OptDimensions end
+***********************************************************************************************
+
+**************************** M O S  R e s u l t s  i n  [ % ] *********************************
+Type=Cylinder and Cone:
+   isotropic:  MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4-Mos10 not used
+   stringered: MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4=Rib Buckl.;   MoS5=Rib Crippl.; MoS6=Panel Buckl.; MoS7=Ring stiff.; MoS8-Mos10 not used
+   orthogrid:  MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4=Rib Crippl.;  MoS5=Skin Buckl.; MoS6-Mos10 not used
+   sandwich:   MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4=Wrinkling;    MoS5=SymmWrinkl;  MoS6=AsymmWrinkl;  MoS7=Dimpling; MoS8-Mos10 not used
+
+Type=Bulkhead:
+   isotropic: MoS1=MSY Pol;  MoS2=MSU Pol;  MoS3=MSY Eq.;  MoS4=MSU Eq.;  MoS5=MSY/U min;  MoS6=Global Buckl.; MoS7-Mos10 not used
+   orthogrid: MoS1=MSY Pol;  MoS2=MSU Pol;  MoS3=MSY Eq.;  MoS4=MSU Eq.;  MoS5=MSY/U min;  MoS6=Global Buckl.; MoS7=Rib Crippl.;  MoS8=Skin Buckl.; MoS9-MoS10 not used
+   sandwich:  MoS1=MSY Pol;  MoS2=MSU Pol;  MoS3=MSY Eq.;  MoS4=MSU Eq.;  MoS5=MSY/U min;  MoS6=Global Buckl.; MoS7=Wrinkling;    MoS8=SymmWrinkl;  MoS9=AsymmWrinkl;  MoS10=Dimpling;
+
+Type=Strut Cone:
+   MoS1=Yield;  MoS2=Ult;  MoS3=Strut Buckl.;  MoS4-Mos10 not used
+
+Type=Y-Ring, Ringstiffener, Dummy-Mass: no Margins are calculated.
+
+MOSResults start
+// ID;       Name;      Type;      Stiff; LoadID;    Mass [kg];   Vol [mm^3];       MoS1;       MoS2;       MoS3;       MoS4;       Mos5;       MoS6;       MoS7;       MoS8;       MoS9;      MoS10
+MOSResults end
+***********************************************************************************************

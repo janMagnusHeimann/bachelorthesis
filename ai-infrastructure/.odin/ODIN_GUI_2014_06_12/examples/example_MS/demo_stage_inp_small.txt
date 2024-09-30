@@ -1,0 +1,29 @@
+// Written on: Tue Apr 09 15:40:36 CEST 2024
+
+Component Section
+Component start
+//           ID;            name;            type;            Mode;           Stiff;        StiffGeo;             Mat;  Load1/L2/../LX;               R;               L;            Dim3;            Dim4;            Dim5;             msf
+Component end
+
+Stiffening Geometry Section
+StiffGeo start
+//           ID;            name;               t;            Dim1;            Dim2;            Dim3;            Dim4;            Dim5;            Dim6;            Dim7;            Dim8;             Tol
+StiffGeo end
+
+Material Section
+Material start
+//           ID;            name;            Rp02;              Rm;               E;               G;              nu;            dens
+              1;             cfk;           754.1;           754.1;         73548.0;         28701.0;             0.3;            16.0
+Material end
+
+Load Section
+Load start
+//           ID;            name;            Pint;            Pext;            Flux;            Temp;        FOSYield;          FOSUlt;           FOSlB;           FOSgB;           MatID
+              1;      LoadCase_1;               0;               0;          -125.0;            20.0;            1.25;            1.25;             1.5;            1.31;               1
+Load end
+
+Stagecollector
+Collector start
+//           ID;            Name;          CompID;     Orientation;        ParentID;         IFchild;        IFparent; VolD1/.../VolDX;            Size;               N
+Collector end
+

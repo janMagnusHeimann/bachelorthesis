@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Variables xmlns="http://www.astos.de/schema/astos/9.10/scenario" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.astos.de/schema/astos/9.10/scenario Scenario.xsd" checksum="a1986307150">
+	<Variable name="CA" type="Interpolation Table" db_type="Excel" db_connection="misdat" query="Main!C31:C43;Main!E31:E43" auto_update="false" last_update="16.09.2020 12:53:10">
+		<Dimensions>
+			<Item>Mach</Item>
+		</Dimensions>
+		<Units>
+			<Item>None</Item>
+			<Item>None</Item>
+		</Units>
+		<Data>
+			<Item>
+				<Item>0.1</Item>
+				<Item>0.21306197345256805</Item>
+			</Item>
+			<Item>
+				<Item>0.5</Item>
+				<Item>0.19152885675430298</Item>
+			</Item>
+			<Item>
+				<Item>0.8</Item>
+				<Item>0.20807866752147675</Item>
+			</Item>
+			<Item>
+				<Item>0.9</Item>
+				<Item>0.38472554087638855</Item>
+			</Item>
+			<Item>
+				<Item>1.0</Item>
+				<Item>0.678911566734314</Item>
+			</Item>
+			<Item>
+				<Item>1.1</Item>
+				<Item>0.9032176733016968</Item>
+			</Item>
+			<Item>
+				<Item>1.2</Item>
+				<Item>0.9355388283729553</Item>
+			</Item>
+			<Item>
+				<Item>1.3</Item>
+				<Item>0.5494943261146545</Item>
+			</Item>
+			<Item>
+				<Item>2.0</Item>
+				<Item>0.43391290307044983</Item>
+			</Item>
+			<Item>
+				<Item>3.0</Item>
+				<Item>0.3657491207122803</Item>
+			</Item>
+			<Item>
+				<Item>5.0</Item>
+				<Item>0.28717514872550964</Item>
+			</Item>
+			<Item>
+				<Item>10.0</Item>
+				<Item>0.23907959461212158</Item>
+			</Item>
+			<Item>
+				<Item>20.0</Item>
+				<Item>0.22339358925819397</Item>
+			</Item>
+		</Data>
+	</Variable>
+	<Variable name="CNA" type="Interpolation Table" db_type="Excel" db_connection="misdat" query="Main!C31:C43;Main!K31:K43" auto_update="false" last_update="16.09.2020 12:53:10">
+		<Dimensions>
+			<Item>Mach</Item>
+		</Dimensions>
+		<Units>
+			<Item>None</Item>
+			<Item>None/Degree</Item>
+		</Units>
+		<Data>
+			<Item>
+				<Item>0.1</Item>
+				<Item>0.03695189207792282</Item>
+			</Item>
+			<Item>
+				<Item>0.5</Item>
+				<Item>0.03696374595165253</Item>
+			</Item>
+			<Item>
+				<Item>0.8</Item>
+				<Item>0.03697263449430466</Item>
+			</Item>
+			<Item>
+				<Item>0.9</Item>
+				<Item>0.03698495775461197</Item>
+			</Item>
+			<Item>
+				<Item>1.0</Item>
+				<Item>0.03743698075413704</Item>
+			</Item>
+			<Item>
+				<Item>1.1</Item>
+				<Item>0.03779486194252968</Item>
+			</Item>
+			<Item>
+				<Item>1.2</Item>
+				<Item>0.037855688482522964</Item>
+			</Item>
+			<Item>
+				<Item>1.3</Item>
+				<Item>0.047474831342697144</Item>
+			</Item>
+			<Item>
+				<Item>2.0</Item>
+				<Item>0.05190126597881317</Item>
+			</Item>
+			<Item>
+				<Item>3.0</Item>
+				<Item>0.04542960599064827</Item>
+			</Item>
+			<Item>
+				<Item>5.0</Item>
+				<Item>0.03440052270889282</Item>
+			</Item>
+			<Item>
+				<Item>10.0</Item>
+				<Item>0.03462493047118187</Item>
+			</Item>
+			<Item>
+				<Item>20.0</Item>
+				<Item>0.0355306938290596</Item>
+			</Item>
+		</Data>
+	</Variable>
+	<Variable name="Fairing_payload_fairing_diameter" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M90" auto_update="false" last_update="16.09.2020 12:53:11">2.15</Variable>
+	<Variable name="Fairing_payload_fairing_length" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M91" auto_update="false" last_update="16.09.2020 12:53:11">4.3</Variable>
+	<Variable name="Fairing_payload_fairing_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M89" auto_update="false" last_update="16.09.2020 12:53:12">250.0</Variable>
+	<Variable name="Launch_altitude" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="" auto_update="false" last_update="16.09.2020 12:53:12">0.019</Variable>
+	<Variable name="Launch_azimuth" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M98" auto_update="false" last_update="16.09.2020 13:36:38">0.0</Variable>
+	<Variable name="Launch_elevation" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M99" auto_update="false" last_update="16.09.2020 12:53:12">90.0</Variable>
+	<Variable name="Launch_speed" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M100" auto_update="false" last_update="16.09.2020 12:53:13">0.0</Variable>
+	<Variable name="S1_engine_nozzle_exit_area" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M38" auto_update="false" last_update="16.09.2020 12:53:14">1.8</Variable>
+	<Variable name="S1_fixed_vehicle_inert_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M30" auto_update="false" last_update="16.09.2020 12:53:14">950.0</Variable>
+	<Variable name="S1_inert_mass_due_to_propulsion_module" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M28" auto_update="false" last_update="16.09.2020 12:53:15">3095.0</Variable>
+	<Variable name="S1_propellant_structural_load_factor" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M27" auto_update="false" last_update="16.09.2020 12:53:15">0.03629191321499014</Variable>
+	<Variable name="S1_stage_diameter" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M31" auto_update="false" last_update="16.09.2020 12:53:15">2.15</Variable>
+	<Variable name="S1_stage_length" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M32" auto_update="false" last_update="16.09.2020 12:53:16">31.0</Variable>
+	<Variable name="S1_useable_fuel_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M24" auto_update="false" last_update="16.09.2020 12:53:16">96829.0</Variable>
+	<Variable name="S1_vacuum_ISP" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M35" auto_update="false" last_update="16.09.2020 12:53:16">322.0</Variable>
+	<Variable name="S1_vacuum_thrust" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M36" auto_update="false" last_update="16.09.2020 12:53:17">1547.0</Variable>
+	<Variable name="S2_fixed_vehicle_inert_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M48" auto_update="false" last_update="16.09.2020 12:53:17">600.0</Variable>
+	<Variable name="S2_inert_mass_due_to_propulsion_module" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M46" auto_update="false" last_update="16.09.2020 12:53:18">243.0</Variable>
+	<Variable name="S2_propellant_structural_load_factor" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M45" auto_update="false" last_update="16.09.2020 12:53:18">0.024194608809993426</Variable>
+	<Variable name="S2_stage_diameter" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M49" auto_update="false" last_update="16.09.2020 12:53:18">2.15</Variable>
+	<Variable name="S2_stage_length" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M50" auto_update="false" last_update="16.09.2020 12:53:19">6.3</Variable>
+	<Variable name="S2_useable_fuel_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M42" auto_update="false" last_update="16.09.2020 12:53:19">12082.0</Variable>
+	<Variable name="S2_vacuum_ISP" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M52" auto_update="false" last_update="16.09.2020 12:53:19">349.0</Variable>
+	<Variable name="S2_vacuum_thrust" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M53" auto_update="false" last_update="16.09.2020 12:53:20">97.0</Variable>
+	<Variable name="S3_fixed_vehicle_inert_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M64" auto_update="false" last_update="16.09.2020 12:53:20">212.0</Variable>
+	<Variable name="S3_inert_mass_due_to_propulsion_module" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M62" auto_update="false" last_update="16.09.2020 12:53:21">20.0</Variable>
+	<Variable name="S3_inert_mass_due_to_vehicle_tank_module" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M60" auto_update="false" last_update="16.09.2020 12:53:21">49.64971866028708</Variable>
+	<Variable name="S3_stage_diameter" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M65" auto_update="false" last_update="16.09.2020 12:53:21">2.15</Variable>
+	<Variable name="S3_stage_length" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M66" auto_update="false" last_update="16.09.2020 12:53:22">1.8</Variable>
+	<Variable name="S3_useable_fuel_mass" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M58" auto_update="false" last_update="16.09.2020 12:53:22">480.407</Variable>
+	<Variable name="S3_vacuum_ISP" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M68" auto_update="false" last_update="16.09.2020 12:53:22">305.0</Variable>
+	<Variable name="S3_vacuum_thrust" type="Floating Point Value" db_type="Excel" db_connection="ASTOS_RFA_FAMILY_V20" query="RFA VEHICLES!M69" auto_update="false" last_update="16.09.2020 12:53:22">1.6</Variable>
+</Variables>

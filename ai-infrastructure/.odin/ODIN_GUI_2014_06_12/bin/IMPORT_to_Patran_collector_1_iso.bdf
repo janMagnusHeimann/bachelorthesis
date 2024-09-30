@@ -1,0 +1,13 @@
+$$ Input header to import the job to Patran
+$  
+SUBCASE 1
+   SUBTITLE=static
+   LOAD =  1
+   SPC  = 10
+BEGIN BULK 
+$  
+INCLUDE 'collector_1_iso.bdf'  
+INCLUDE 'RBE_collector_1_iso.bdf' 
+INCLUDE 'LOAD_collector_1_iso.bdf'   
+$  
+ENDDATA  

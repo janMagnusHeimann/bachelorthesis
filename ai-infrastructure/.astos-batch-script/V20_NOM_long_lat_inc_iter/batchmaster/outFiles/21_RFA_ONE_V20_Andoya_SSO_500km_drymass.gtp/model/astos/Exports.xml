@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Exports xmlns="http://www.astos.de/schema/astos/9.10/scenario" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.astos.de/schema/astos/9.10/scenario Scenario.xsd" checksum="a622841308">
+	<Item>
+		<ID>Google_Earth</ID>
+		<Automatic_Creation>false</Automatic_Creation>
+		<Description></Description>
+		<Google_Earth>
+			<Simulation_Input_File>./integ/simulation.struct</Simulation_Input_File>
+			<Output_Folder>./exports</Output_Folder>
+			<Output_Filename>Google_Earth</Output_Filename>
+			<Vehicle>Rocket</Vehicle>
+		</Google_Earth>
+	</Item>
+	<Item>
+		<ID>Matlab_Export</ID>
+		<Automatic_Creation>false</Automatic_Creation>
+		<Description></Description>
+		<GESOP_Structure>
+			<Simulation_Input_File>./integ/simulation.struct</Simulation_Input_File>
+			<Output_Folder>./exports</Output_Folder>
+			<Output_Filename>Matlab_Export</Output_Filename>
+			<File_Type>MATLAB m-file</File_Type>
+		</GESOP_Structure>
+	</Item>
+	<Item>
+		<ID>Text_export</ID>
+		<Automatic_Creation>true</Automatic_Creation>
+		<Description></Description>
+		<Text_Export>
+			<Simulation_Input_File>./integ/simulation.struct</Simulation_Input_File>
+			<Output_Folder>./exports</Output_Folder>
+			<Output_Filename>Text_Export</Output_Filename>
+		</Text_Export>
+	</Item>
+</Exports>

@@ -1,0 +1,33 @@
+stages:
+  - run-optimization
+
+variables:
+  MAX_ITER: "3"
+  GTP_FILE: "/path/to/nominal_gtp_file"
+
+before_script:
+  # Update Python and install dependencies
+  - python -m venv venv
+  - .\venv\Scripts\activate
+  - python -m pip install --upgrade pip
+  - pip install ".[dev, docs]"
+
+downhill-simplex_opt:
+  stage: run-optimization
+  script:
+    - echo "Running rocketOptimizer..."
+    - .\venv\Scripts\activate
+    - rocketOptimizer $MAX_ITER # --gtp-file $GTP_FILE
+  artifacts:
+    paths:
+      - Images_Out\plots.pdf
+      - Images_Out\Rocket_Parameters.pdf
+      - Images_Out\price_contributions.pdf
+      - .loadCaseData\input_template.xlsx
+      - .loadCaseData\Output_Report.xlsx
+  only:
+    - nead-mead_loop
+    - main
+  environment:
+    name: markus-workstation
+  when: on_success  # Run only if previous steps (if any) succeeded

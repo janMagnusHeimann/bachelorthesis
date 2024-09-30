@@ -1,0 +1,20 @@
+$$ Input header to RUN_normal_modes the job in OptiStruct/RADIOSS
+$$ NORMAL MODES ANALYSIS
+$  
+SUBCASE       1
+  LABEL= normal modes 
+  ANALYSIS = MODES
+  METHOD(STRUCTURE) =     9999
+$  
+BEGIN BULK 
+$  
+PARAM,CHECKEL,NO
+$  
+INCLUDE 'all_iso.bdf'  
+INCLUDE 'RBE_all_iso.bdf' 
+INCLUDE 'LOAD_all_iso.bdf'   
+$  
+$_______$_______$_______$_______$_______$_______$_______$_______$_______
+EIGRL      9999                       20                             MAX
+$  
+ENDDATA  

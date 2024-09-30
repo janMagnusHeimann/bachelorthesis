@@ -1,0 +1,93 @@
+
+ **********************************************************************************************
+                M T  A E R O S P A C E    O D I N  V10p3 
+
+   written/updated by Dr. Thomas Link 21.02.2017
+   Call:
+   odin_V10p3 -if C:\Executables\demo_stage_inp_small.txt -of C:\Executables\demo_stage_out_small.txt -specf C:\Executables\ODIN_GUI_2014_06_12\bin\solve2.spec -sof C:\Executables\midaco_screen.txt 
+ **********************************************************************************************
+ ******************************* I n p u t  P a r a m e t e r s *******************************
+Component Section
+Component start
+// ID;            Name;     Type; Mode;Stiff; StiffGeo;  Mat; LoadX;          R;          L;     DimC3;     DimC4;     DimC5;       msf
+    1;     component_1;  Cylinder;   1;    1;  001/000;    1;  001;       1.000;      2.000;     0.000;     0.000;     0.000;     1.000
+Component end
+
+Stiffening Geometry Section
+StiffGeo start
+//StiffGeo;       Name;        t;       Dim1;       Dim2;       Dim3;       Dim4;       Dim5;       Dim6;       Dim7;       Dim8;       Dim9
+    1;    stiffening_1;    2.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000
+StiffGeo end
+
+Material Section
+Material start
+//Mat;          Name;    Rp02;       Rm;       E;       G;     nu;        dens
+  1;             cfk;   754.10;   754.10;   73548;   28701;   0.30;  1.6000e+001
+Material end
+
+Load Section
+Load start
+//Load;          Name;    Pint;    Pout;      Flux;   Temp; FOSYield;   FOSULT;    FOSlB;    FOSgB;    MatID
+   1;      loadcase_1;   0.000;   0.000;    -125.0;   20.0;    1.250;    1.250;    1.500;    1.310;      1
+Load end
+
+StageCollector Section
+Collector start
+//ID;      Name;   CompID; Orientation; ParentID; IFID; IFParentID;    VolX;    elSizeAx; ncirc  
+  1; collector_;       1;       1;          -1;     0;       0;      0;       0.0000;    0
+Collector end
+***********************************************************************************************
+
+**************** C o m p o n e n t  R e s u l t s *********************************************
+Units: [kg],[mm], [mm^3], [N], [Nmm], [MPa], [%]
+
+Name=component_1, ID=1, Cylinder, isotropic
+Radius=1.00, Length=2.00
+
+(Optimal minimum) wall thickness t=2.000
+
+Mass=402.12, Volume=6.28319, KDF=0.919
+
+LoadID=1  : MSY=865.2 , MSU=865.2 , MS_GlobBuckl=999.0 , (p=0.000; N=-125)
+
+Mises Stress = 62.5, ncrGlobBuckl = 205112.58 (at limit load)
+***********************************************************************************************
+
+************************* O p t i m a l  D i m e n s i o n s **********************************
+Opt minimum Dimensions start
+//CompID; StiffID;         Name;       t;         Dim1;       Dim2;       Dim3;       Dim4;       Dim5;       Dim6;       Dim7;       Dim8;       Dim9
+    1;       1;    stiffening_1;     2.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000;      0.000
+OptDimensions end
+***********************************************************************************************
+
+**************************** M O S  R e s u l t s  i n  [ % ] *********************************
+Type=Cylinder and Cone:
+   isotropic:  MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4-Mos10 not used
+   stringered: MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4=Rib Buckl.;   MoS5=Rib Crippl.; MoS6=Panel Buckl.; MoS7=Ring stiff.; MoS8-Mos10 not used
+   orthogrid:  MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4=Rib Crippl.;  MoS5=Skin Buckl.; MoS6-Mos10 not used
+   sandwich:   MoS1=Yield;  MoS2=Ult;  MoS3=Global Buckl.;  MoS4=Wrinkling;    MoS5=SymmWrinkl;  MoS6=AsymmWrinkl;  MoS7=Dimpling; MoS8-Mos10 not used
+
+Type=Bulkhead:
+   isotropic: MoS1=MSY Pol;  MoS2=MSU Pol;  MoS3=MSY Eq.;  MoS4=MSU Eq.;  MoS5=MSY/U min;  MoS6=Global Buckl.; MoS7-Mos10 not used
+   orthogrid: MoS1=MSY Pol;  MoS2=MSU Pol;  MoS3=MSY Eq.;  MoS4=MSU Eq.;  MoS5=MSY/U min;  MoS6=Global Buckl.; MoS7=Rib Crippl.;  MoS8=Skin Buckl.; MoS9-MoS10 not used
+   sandwich:  MoS1=MSY Pol;  MoS2=MSU Pol;  MoS3=MSY Eq.;  MoS4=MSU Eq.;  MoS5=MSY/U min;  MoS6=Global Buckl.; MoS7=Wrinkling;    MoS8=SymmWrinkl;  MoS9=AsymmWrinkl;  MoS10=Dimpling;
+
+Type=Strut Cone:
+   MoS1=Yield;  MoS2=Ult;  MoS3=Strut Buckl.;  MoS4-Mos10 not used
+
+Type=Y-Ring, Ringstiffener, Dummy-Mass: no Margins are calculated.
+
+MOSResults start
+// ID;       Name;      Type;      Stiff; LoadID;    Mass [kg];   Vol [mm^3];       MoS1;       MoS2;       MoS3;       MoS4;       Mos5;       MoS6;       MoS7;       MoS8;       MoS9;      MoS10
+    1; component_;  Cylinder;  isotropic;      1;       402.12;       6.2832;        865;        865;        999;        999;        999;        999;        999;        999;        999;        999
+MOSResults end
+***********************************************************************************************
+
+**************************** S t a g e  C o l l e c t o r *************************************
+CollectorResults start
+Stage Name=collector_1;  ID=1;  Mass=402.12;  Vol0=0
+
+// CID; ParentID; IFNo; IFParentNo;        xIF1;        xIF2;        xIF3;           Vol0
+   1;      -1;      0;           0;       0.000;       2.000;       0.000;              0
+CollectorResults end
+***********************************************************************************************

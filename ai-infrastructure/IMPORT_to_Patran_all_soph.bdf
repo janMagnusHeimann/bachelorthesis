@@ -1,0 +1,13 @@
+$$ Input header to import the job to Patran
+$  
+SUBCASE 1
+   SUBTITLE=static
+   LOAD =  1
+   SPC  = 10
+BEGIN BULK 
+$  
+INCLUDE 'all_soph.bdf'  
+INCLUDE 'RBE_all_soph.bdf' 
+INCLUDE 'LOAD_all_soph.bdf'   
+$  
+ENDDATA  

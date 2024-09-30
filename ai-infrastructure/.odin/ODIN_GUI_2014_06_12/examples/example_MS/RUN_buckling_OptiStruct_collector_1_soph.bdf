@@ -1,0 +1,29 @@
+$$ Input header to run the job in OptiStruct/RADIOSS
+$$ LINEAR BUCKLING ANALYSIS
+$  
+DEBUG,SHPBCKOR,1.0
+$  
+SUBCASE       1
+  LABEL= static 
+  SPC =        10
+  LOAD =        1
+  ANALYSIS = STATICS
+$  
+SUBCASE       2
+  LABEL= buckling 
+  SPC =        10
+  METHOD(STRUCTURE) =     9999
+  STATSUB(BUCKLING) =        1
+$  
+BEGIN BULK 
+$  
+PARAM,CHECKEL,NO
+$  
+INCLUDE 'collector_1_soph.bdf'  
+INCLUDE 'RBE_collector_1_soph.bdf' 
+INCLUDE 'LOAD_collector_1_soph.bdf'   
+$  
+$_______$_______$_______$_______$_______$_______$_______$_______$_______
+EIGRL      9999 0.0                   1                              MAX
+$  
+ENDDATA  

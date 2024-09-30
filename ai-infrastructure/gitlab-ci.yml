@@ -1,0 +1,12 @@
+stages:
+  - build
+
+run_local_command:
+  stage: build
+  tags:
+    - local  # Ensure this tag matches one of the tags you assigned during runner registration
+  script:
+    - echo "Running script on local machine..."
+    - cmd /c "dir"  # Example command for Windows
+    # For Linux or macOS, you might use:
+    # - ls -la
