@@ -1,3 +1,4 @@
+from rocket_optimizer.loadCaseGenerator import loadCaseGenerator
 from rocket_optimizer.odin import odin
 from rocket_optimizer.odinInputModifier import odinInputModifier
 from rocket_optimizer.odinInputModifier import odinInputModifier_flux
@@ -8,21 +9,8 @@ from rocket_optimizer.loadCaseInputGenerator import loadCaseInputGenerator
 from rocket_optimizer.odinOutToAstosIn import odinOutToAstosIn
 from rocket_optimizer.distances_nozzle_exit_plane import distances_nozzle_exit_plane
 # from rocket_optimizer.tank_pressure_optimizer import tank_pressure_optimizer
-from rocket_optimizer.interstage_calc import interstage_calc
-import os
-
-
-# TODO: remove hardcoded values below
-out_fold = './Images_Out/'
-if not os.path.exists(out_fold):
-    os.makedirs(out_fold)
-
-material_stage1 = "Steel"  # material for stage 1 'Al', 'CFK', 'Steel'
-material_stage2 = "Steel"  # material for stage 2 'Al', 'CFK', 'Steel'
-material_stage3 = "Steel"  # material for stage 3 'Al', 'CFK', 'Steel'
-material_interstage1 = "CFK"  # material for interstage 1 'Al', 'CFK', 'Steel'
-material_interstage2 = "CFK"  # material for interstage 2 'Al', 'CFK', 'Steel'
-
+from rocket_optimizer.flux_calc import max_flux_calc
+from rocket_optimizer.tank_pressure_optimizer.main import loadCaseEditInput, loadFactorFromOutput
 
 '''
 optimizingLoop function is called in the main function to optimize the rocket.
@@ -68,13 +56,18 @@ def optimizingLoop(i):
     distances_nozzle_exit_plane(s1_tank_length, s2_tank_length)
 
     # create load case generator input excel file
-    loadCaseInputGenerator()
+    loadCaseInputGenerator(i)
 
     # # calculate new p1 and p2 values
     # p_s1, p_s2 = tank_pressure_optimizer(0, 15, 0, 15, 1.2, 100, 1.0e-6)  # 100 iterations hardcoded
     p_s1, p_s2 = 7., 7.
     Results.append_value('p1', p_s1)
     Results.append_value('p2', p_s2)
+    loadCaseEditInput(p_s1, p_s2)
+    loadCaseGenerator(AstosOutput.rocket_diameter)
+    loadFactor_s1, loadFactor_s2 = loadFactorFromOutput()
+    print("Stage 1 tank factor of safety: ", loadFactor_s1)
+    print("Stage 2 tank factor of safety: ", loadFactor_s2)
     # print('\n\n--------PRESSURE CHECK----------')
     # print (p_s1, p_s2, '\n\n')
     # safety factor here is 1.5, prev. 1.2 in order to increase tank wallthickness reasonably
@@ -84,10 +77,10 @@ def optimizingLoop(i):
     # TODO: !DELETE HARCODED! /2, there to make tank pressure and wall thickness more realistic
     # AstosOutput.stage2_tank_pressure = p_s2
 
-    s1_lox_tank_length = (2.63*(810/1091) * s1_tank_length) / (1+2.63*(810/1091))
+    s1_lox_tank_length = (2.63*(810.0/1091.0) * s1_tank_length) / (1.0 + 2.63*(810.0/1091.0))
     s1_rp1_tank_length = s1_tank_length - s1_lox_tank_length
 
-    s2_lox_tank_length = (2.63 * (810 / 1091) * s2_tank_length) / (1 + 2.63 * (810 / 1091))
+    s2_lox_tank_length = (2.63*(810.0/1091.0) * s2_tank_length) / (1.0 + 2.63*(810.0/1091.0))
     s2_rp1_tank_length = s2_tank_length - s2_lox_tank_length
 
     s1_interstage_length = 1.4 * AstosOutput.rocket_diameter  # TODO
@@ -96,27 +89,46 @@ def optimizingLoop(i):
     Results.append_value('interstage_length_s1', s1_interstage_length)  # TODO
     Results.append_value('interstage_length_s2', s2_interstage_length)  # TODO
 
-    odinInputModifier(AstosOutput.odin_input_path, 's1_cylinder', str(
-        s1_rp1_tank_length), 'S1_LOXtank', str(
-        (AstosOutput.stage1_tank_pressure * safety_factor_pressure) / 10))
-    odinInputModifier(AstosOutput.odin_input_path, 's1_cylinder_2', str(
-        s1_lox_tank_length), 'S1_Rp1tank', str(
-        (AstosOutput.stage1_tank_pressure * safety_factor_pressure) / 10))
-    odinInputModifier(AstosOutput.odin_input_path, 's2_cylinder', str(
-        s2_rp1_tank_length), 'S2_LOXtank', str(
-        (AstosOutput.stage2_tank_pressure * safety_factor_pressure) / 10))
-    odinInputModifier(AstosOutput.odin_input_path, 's2_cylinder_2', str(
-        s2_lox_tank_length), 'S2_LOXtank', str(
-        (AstosOutput.stage2_tank_pressure * safety_factor_pressure) / 10))
+    odinInputModifier(AstosOutput.odin_input_path, 's1_cylinder', s1_rp1_tank_length,
+                      'S1_RP1tank', (AstosOutput.stage1_tank_pressure * safety_factor_pressure) / 10)
+    odinInputModifier(AstosOutput.odin_input_path, 's1_cylinder_2', s1_lox_tank_length,
+                      'S1_LOXtank', (AstosOutput.stage1_tank_pressure * safety_factor_pressure) / 10)
+    odinInputModifier(AstosOutput.odin_input_path, 's2_cylinder', s2_rp1_tank_length,
+                      'S2_RP1tank', (AstosOutput.stage2_tank_pressure * safety_factor_pressure) / 10)
+    odinInputModifier(AstosOutput.odin_input_path, 's2_cylinder_2', s2_lox_tank_length,
+                      'S2_LOXtank', (AstosOutput.stage2_tank_pressure * safety_factor_pressure) / 10)
 
-    interstage_calc()
+    AstosOutput.S1_RP1_tank_flux = max_flux_calc(AstosOutput.d_n_stage1_bottom_tank_head,
+                                                 AstosOutput.d_n_stage1_bulkhead)
+    AstosOutput.S1_LOX_tank_flux = max_flux_calc(AstosOutput.d_n_stage1_bulkhead,
+                                                 AstosOutput.d_n_stage1_top_tank_head)
+    AstosOutput.S2_RP1_tank_flux = max_flux_calc(AstosOutput.d_n_stage2_bottom_tank_head,
+                                                 AstosOutput.d_n_stage2_bulkhead)
+    AstosOutput.S2_LOX_tank_flux = max_flux_calc(AstosOutput.d_n_stage2_bulkhead,
+                                                 AstosOutput.d_n_stage2_top_tank_head)
 
-    odinInputModifier_flux(AstosOutput.odin_input_path, 'S1_interstage', str(
-        s1_interstage_length), 'Flux_interstage_S1', str(
-          AstosOutput.interstage1_flux))
-    odinInputModifier_flux(AstosOutput.odin_input_path, 'S2_interstage', str(
-        s2_interstage_length), 'Flux_interstage_S2', str(
-            AstosOutput.interstage2_flux))
+    odinInputModifier_flux(AstosOutput.odin_input_path, 's1_cylinder', s1_interstage_length,
+                           'S1_RP1tank', AstosOutput.S1_RP1_tank_flux)
+    odinInputModifier_flux(AstosOutput.odin_input_path, 's1_cylinder_2', s2_interstage_length,
+                           'S1_LOXtank', AstosOutput.S1_LOX_tank_flux)
+    odinInputModifier_flux(AstosOutput.odin_input_path, 's2_cylinder', s1_interstage_length,
+                           'S2_RP1tank', AstosOutput.S2_RP1_tank_flux)
+    odinInputModifier_flux(AstosOutput.odin_input_path, 's2_cylinder_2', s2_interstage_length,
+                           'S2_LOXtank', AstosOutput.S2_LOX_tank_flux)
+
+    AstosOutput.interstage1_flux = max_flux_calc(AstosOutput.d_n_stage1__stage2_interstage_bottom,
+                                                 AstosOutput.d_n_stage1__stage2_interstage_flange - 0.2)
+    print("Interstage 1 max flux: ", AstosOutput.interstage1_flux)
+    AstosOutput.interstage2_flux = max_flux_calc(AstosOutput.d_n_stage2__fairing_interstage_bottom,
+                                                 AstosOutput.d_n_stage2__fairing_interstage_flange)
+    print("Interstage 2 max flux: ", AstosOutput.interstage2_flux)
+
+    odinInputModifier_flux(AstosOutput.odin_input_path, 'S1_interstage', s1_interstage_length,
+                           'S1_interstage', AstosOutput.interstage1_flux)
+    odinInputModifier_flux(AstosOutput.odin_input_path, 'S2_interstage', s2_interstage_length,
+                           'S2_interstage', AstosOutput.interstage2_flux)
+
+    # TODO: add thruss frame loads
 
     # # run odin.exe to specify new wall thicknesses
     odin("./.input", "./.output")
@@ -125,4 +137,3 @@ def optimizingLoop(i):
     # astosOutputReader("./.astos-batch-script/V20_NOM_long_lat_inc_iter/batchmaster/outFiles/")
 
     # costCalculation(out_fold, material_stage1, material_stage2, material_interstage1, material_interstage2, i)
-    

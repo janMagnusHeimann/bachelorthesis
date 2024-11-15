@@ -103,14 +103,14 @@ def odinOutToAstosIn(i):
 
     # extract s1 data
     s1_lower_dome_weight, s1_lower_dome_thickness = extract_component_data(filename, "s1_aftdome")
-    s1_lox_cylinder_weight, s1_lox_cylinder_thickness = extract_component_data(filename, "s1_cylinder")
-    s1_rp1_cylinder_weight, s1_rp1_cylinder_thickness = extract_component_data(filename, "s1_cylinder_2")  # TODO
+    s1_rp1_cylinder_weight, s1_rp1_cylinder_thickness = extract_component_data(filename, "s1_cylinder")
+    s1_lox_cylinder_weight, s1_lox_cylinder_thickness = extract_component_data(filename, "s1_cylinder_2")
     s1_upper_dome_weight, s1_upper_dome_thickness = extract_component_data(filename, "s1_fddome")
 
     # extract s2 data
     s2_lower_dome_weight, s2_lower_dome_thickness = extract_component_data(filename, "s2_aftdome")
-    s2_lox_cylinder_weight, s2_lox_cylinder_thickness = extract_component_data(filename, "s2_cylinder")
-    s2_rp1_cylinder_weight, s2_rp1_cylinder_thickness = extract_component_data(filename, "s2_cylinder_2")  # TODO
+    s2_rp1_cylinder_weight, s2_rp1_cylinder_thickness = extract_component_data(filename, "s2_cylinder")
+    s2_lox_cylinder_weight, s2_lox_cylinder_thickness = extract_component_data(filename, "s2_cylinder_2")
     s2_upper_dome_weight, s2_upper_dome_thickness = extract_component_data(filename, "s2_fddome")
 
     s1_interstage_mass, s1_interstage_thickness = extract_component_data(filename, "s1_interstage")
@@ -151,21 +151,15 @@ def odinOutToAstosIn(i):
     # sigma_s1 = []
     # sigma_s2 = []
 
-    sigma_s1 = float(
-        abs(
-            (s1_lower_dome_weight + s1_lox_cylinder_weight + s1_rp1_cylinder_weight + s1_upper_dome_weight)
-            / AstosOutput.mass_stage1_prop
-        )
-    )
+    sigma_s1 = float(abs(
+        (s1_lower_dome_weight + s1_lox_cylinder_weight + s1_rp1_cylinder_weight + s1_upper_dome_weight)
+        / AstosOutput.mass_stage1_prop))
 
     # sigma_s1.append(sigma_s1_0)
 
-    sigma_s2 = float(
-        abs(
-            (s2_lower_dome_weight + s2_lox_cylinder_weight + s2_rp1_cylinder_weight + s2_upper_dome_weight)
-            / AstosOutput.mass_stage2_prop
-        )
-    )
+    sigma_s2 = float(abs(
+        (s2_lower_dome_weight + s2_lox_cylinder_weight + s2_rp1_cylinder_weight + s2_upper_dome_weight)
+        / AstosOutput.mass_stage2_prop))
 
     # sigma_s1 = float(sigma_s1_0)
     # sigma_s2 = float(sigma_s2_0)

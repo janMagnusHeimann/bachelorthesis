@@ -209,21 +209,21 @@ def calculate_load_factor_difference(p_s1, p_s2, tar_lf):
 #     return p_s1_mid, p_s2_mid
 
 
-def tank_pressure_optimizer(p_s1_lower, p_s1_upper, p_s2_lower, p_s2_upper, tar_lf, max_iter, tol):
-    p1_list = np.linspace(p_s1_lower, p_s1_upper, 30)
-    p2_list = np.linspace(p_s2_lower, p_s2_upper, 30)
-
-    fos_1 = np.empty((30, 30))
-    fos_2 = np.empty((30, 30))
-
-    for i, p1 in enumerate(p1_list):
-        for j, p2 in enumerate(p2_list):
-            fos_1[i, j], fos_2[i, j] = calculate_load_factor_difference(p1, p2, 0)
-
-    import matplotlib.pyplot as plt
-
-
-    pass
+# def tank_pressure_optimizer(p_s1_lower, p_s1_upper, p_s2_lower, p_s2_upper, tar_lf, max_iter, tol):
+#     p1_list = np.linspace(p_s1_lower, p_s1_upper, 30)
+#     p2_list = np.linspace(p_s2_lower, p_s2_upper, 30)
+#
+#     fos_1 = np.empty((30, 30))
+#     fos_2 = np.empty((30, 30))
+#
+#     for i, p1 in enumerate(p1_list):
+#         for j, p2 in enumerate(p2_list):
+#             fos_1[i, j], fos_2[i, j] = calculate_load_factor_difference(p1, p2, 0)
+#
+#     import matplotlib.pyplot as plt
+#
+#
+#     pass
 
 
 # Example usage:

@@ -36,8 +36,9 @@ def odin(input_folder, output_folder):
             # Execute the command
             process = subprocess.run(command, text=True, capture_output=True)
             print(f"Command: {' '.join(command)}")
+            if process.stderr:
+                print("Error:", process.stderr)
             print("Output:", process.stdout)
-            print("Error:", process.stderr)
     else:
         print("Mismatch in number of input" +
               "and output files, or no files found.")

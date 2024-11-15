@@ -66,7 +66,7 @@ def find_lowest_nonzero(arr):
 def astosOutputReader(main_path, n=-1):
 
     aoa = 10
-    safety_factor_bendignloads = 1.2  # this safety_factor decreases wallthickness (counterintuitive)
+    safety_factor_bending_loads = 1.2  # this safety_factor decreases wall thickness (counterintuitive)
 
     # Function to find .gtp files in a single .gpt directory
 
@@ -286,9 +286,9 @@ def astosOutputReader(main_path, n=-1):
     AstosOutput.length_conical_section = 2.9
     AstosOutput.nosecone_semivertex_angle = 20.46
     AstosOutput.stage1_burntime = burn_time_S1
-    AstosOutput.q_alpha = (maxQ/1000) * aoa * safety_factor_bendignloads
+    AstosOutput.q_alpha = (maxQ/1000) * aoa * safety_factor_bending_loads
 
-    i_maxQ = np.array(results['dynamic_pressure']).argmax()
+    i_maxQ = np.array(results['dynamic_pressure']).argmax()  # TODO: add liftoff, MECO, SECO, etc.
 
     AstosOutput.altitude_at_condition_min = altitude[i_maxQ]
     AstosOutput.altitude_at_condition_nominal = altitude[i_maxQ]

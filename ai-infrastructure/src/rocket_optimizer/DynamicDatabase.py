@@ -112,6 +112,10 @@ class AstosOutput:
     # sealevel_thrust_s1: float
     interstage1_flux: float
     interstage2_flux: float
+    S1_LOX_tank_flux: float
+    S1_RP1_tank_flux: float
+    S2_LOX_tank_flux: float
+    S2_RP1_tank_flux: float
     S1_total_dry_mass: float
     S2_total_dry_mass: float
     residual_prop_s1: float
@@ -208,6 +212,7 @@ class AstosOutput:
     d_n_stage1__stage2_interstage_flange: float
     d_n_stage2_bottom_tank_head: float
     d_n_stage2_bulkhead: float
+    d_n_stage2__fairing_interstage_bottom: float
     d_n_stage2_top_tank_head: float
     d_n_stage2__fairing_interstage_flange: float
 
@@ -224,8 +229,13 @@ class AstosOutput:
     engine_nozzle_area_s1: float
     engine_nozzle_area_s2: float
 
-    odin_input_path: str  # TODO: move it somewhere else
-
+    # TODO: move it somewhere else
+    odin_input_path: str
+    s1_tank_material: str
+    s2_tank_material: str
+    s3_tank_material: str
+    interstage1_material: str
+    interstage2_material: str
 
 @dataclass(frozen=True)
 class DatabaseOutput:
@@ -265,12 +275,14 @@ class DatabaseOutput:
     al_prod_price: float = 400.  # [Euro/kg]
     cfk_prod_price: float = 2200.  # [Euro/kg]
 
-    # engine_prod_price: float = 2280  # [Euro/kg]
-    # inert_prod_price: float = 10  # [Euro/kg]
+    S1_prop_system_price: float = 3373416.94  # [Euros]
+    S1_avionics_price: float = 141416.  # [Euros]
+    S2_prop_system_price: float = 340749.19  # [Euros]
+    S2_avionics_price: float = 750171.  # [Euros]
 
-    engine_plus_inert_price_s1: float = 3514832.94
+    # engine_plus_inert_price_s1: float = 3514832.94
 
-    engine_plus_inert_price_s2: float = 1090920.19
+    # engine_plus_inert_price_s2: float = 1090920.19
 
     # OTV price
     OTV_price: float = 921765.32
@@ -278,20 +290,26 @@ class DatabaseOutput:
 
     materials: dict[str, dict[str, float]] = field(default_factory=lambda: {
         "Steel":
-            {"yield strenght": 870.0e+6,
-             "Young modulus": 200.0e+9,
+            {"yield strenght": 870.0,
+             "Young's modulus": 200.0e+3,
              "Poisson's ratio": .28,
-             "density": 7.9e-6},
-        "Aluminium":
-            {"yield strenght": 276.0e+6,
-             "Young modulus": 70.0e+9,
+             "Shear modulus": 77000,
+             "density": 7.9e+3,
+             "MorC": "M"},
+        "Al":
+            {"yield strenght": 276.0,
+             "Young's modulus": 70.0e+3,
              "Poisson's ratio": .33,
-             "density": 2.7e-6},
+             "Shear modulus": 26000,
+             "density": 2.7e+3,
+             "MorC": "M"},
         "CFK":
-            {"yield strenght": 748.1e+6,
-             "Young modulus": 48.0e+9,
+            {"yield strenght": 748.1,
+             "Young's modulus": 48.0e+3,
              "Poisson's ratio": .04,
-             "density": 1.57e-6},
+             "Shear modulus": 2625,
+             "density": 1.57e+3,
+             "MorC": "C"},
     })  # TODO: use these instead of excel
 
 

@@ -1,4 +1,4 @@
-def update_section_data(lines, start_marker, end_marker, key_col_name, value_col_name, target_name, new_value):
+def update_section_data(lines, start_marker, end_marker, key_col_name, value_col_name, target_name, new_value, dec_digits=3):
     # Find the start and end of the data section
     section_start = None
     section_end = None
@@ -19,15 +19,16 @@ def update_section_data(lines, start_marker, end_marker, key_col_name, value_col
 
         # Process each line in the section to update the required value
         for i in range(section_start + 2, section_end):  # Start from the next line after the header
-            columns = lines[i].strip().split(';')
-            columns = [c.strip() for c in columns]  # Clean each column entry
+            columns = lines[i].split(';')
+            values = [c.strip() for c in columns]  # Clean each column entry
 
-            if columns[key_col_index] == target_name:
-                old_value = columns[value_col_index]
+            if values[key_col_index] == target_name:
+                curr_column = columns[value_col_index]
+                old_value = values[value_col_index]
                 # Adjust the new value to match the old value's length
-                new_value_formatted = str(new_value).ljust(len(old_value))
+                new_value_formatted = ("{:>16." + f"{dec_digits}" + "f}").format(new_value)  # .rjust(len(curr_column))
                 columns[value_col_index] = new_value_formatted
-                lines[i] = '; '.join(columns) + '\n'  # Rebuild the line with updated value
+                lines[i] = ';'.join(columns)  # Rebuild the line with updated value
 
 
 def odinInputModifier(file_path, component_name, new_length, pint_name, new_pint):
@@ -43,12 +44,12 @@ def odinInputModifier(file_path, component_name, new_length, pint_name, new_pint
         file.truncate()
 
 
-def odinInputModifier_flux(file_path, component_name, new_length, pint_name, new_pint):
+def odinInputModifier_flux(file_path, component_name, new_length, flux_name, new_flux):
     with open(file_path, 'r+') as file:
         lines = file.readlines()
 
         update_section_data(lines, 'Component start', 'Component end', 'name', 'L', component_name, new_length)
-        update_section_data(lines, 'Load start', 'Load end', 'name', 'Flux', pint_name, new_pint)
+        update_section_data(lines, 'Load start', 'Load end', 'name', 'Flux', flux_name, new_flux, 8)
 
         # Rewrite the file with the updated lines
         file.seek(0)

@@ -1,5 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<Variables xmlns="http://www.astos.de/schema/astos/9.10/scenario" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.astos.de/schema/astos/9.10/scenario Scenario.xsd" checksum="a3586067411">
-	<Variable name="S1_dry_prop_ratio" type="Floating Point Value">0.0673910641867364</Variable>
-	<Variable name="S2_dry_prop_ratio" type="Floating Point Value">0.037584251535092164</Variable>
-</Variables>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<Astroview_Config checksum="a4098746542">
+<Astroview_Config checksum="a4032883008">
 	<Version>1.0</Version>
 	<Window>
 		<Width>1918</Width>
@@ -8,22 +8,22 @@
 	<Camera>
 		<Target>Obs_Rocket</Target>
 		<Orientation>
-			<W>0.2028133001659423</W>
-			<X>-0.583209790887958</X>
-			<Y>0.7202692334142659</Y>
-			<Z>0.3161413235960298</Z>
+			<W>0.04670872393445965</W>
+			<X>-0.6065280050974278</X>
+			<Y>0.7045657049981454</Y>
+			<Z>0.3654165314834774</Z>
 		</Orientation>
 		<Position>
-			<X>-638.9527208456061</X>
-			<Y>5772.606145028947</Y>
-			<Z>-5988.366444200564</Z>
+			<X>-3148.7685113196617</X>
+			<Y>4768.21786417316</Y>
+			<Z>-6077.921537584275</Z>
 		</Position>
 		<Frame>inertial</Frame>
 		<Field_of_View>60.0</Field_of_View>
 		<Snapshots></Snapshots>
 	</Camera>
 	<Timing>
-		<Current_Time>1420.5799948234846</Current_Time>
+		<Current_Time>1426.1799948234798</Current_Time>
 		<Time_Scale>1.0</Time_Scale>
 		<Paused>false</Paused>
 	</Timing>

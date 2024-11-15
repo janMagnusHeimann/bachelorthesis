@@ -48,13 +48,15 @@ def pdf(fold, i, material_stage1, material_stage2, material_stage3, material_int
             "STAGE 1",
             "stage length [m]",
             "dry mass [kg]",
+            "empty tank mass [kg]",
             "filled propellant [kg]",
             "unuseable propellant [kg]",
             "vacuum Isp [s]",
             "vacuum thrust [kN]",
             "sea level thrust at takeoff [kN]",
             "engine nozzle exit area [m^2]",
-            "wall thickness [mm]",
+            "RP1 tank wall thickness [mm]",
+            "LOX tank wall thickness [mm]",
             "sigma [-]",
             "tank pressure [bara]",
             "interstage mass [kg]",
@@ -62,12 +64,14 @@ def pdf(fold, i, material_stage1, material_stage2, material_stage3, material_int
             "STAGE 2",
             "stage length [m]",
             "dry mass [kg]",
+            "empty tank mass [kg]",
             "filled propellant [kg]",
             "unuseable propellant [kg]",
             "vacuum Isp [s]",
             "vacuum thrust [kN]",
             "engine nozzle exit area [m^2]",
-            "wall thickness [mm]",
+            "RP1 tank wall thickness [mm]",
+            "LOX tank wall thickness [mm]",
             "sigma [-]",
             "tank pressure [bara]",
             "interstage mass [kg]",
@@ -88,12 +92,14 @@ def pdf(fold, i, material_stage1, material_stage2, material_stage3, material_int
             "STAGE 1",
             format_float_one_digit(Results.get_value_at("complete_length_s1", i - 1)),
             format_float_zero_digit(AstosOutput.S1_total_dry_mass),
+            format_float_zero_digit(Results.get_value_at('s1_tank_mass', i - 1)),
             format_float_zero_digit(AstosOutput.mass_stage1_prop),
             format_float_zero_digit(AstosOutput.residual_prop_s1),
             format_float_zero_digit(AstosOutput.vacuum_isp_s1),
             format_float_zero_digit(AstosOutput.vacuum_thrust_s1),
             format_float_zero_digit(AstosOutput.engine_sealevel_thrust),
             format_float_two_digit(AstosOutput.engine_nozzle_exit_s1),
+            format_float_two_digit(Results.get_value_at("wall_thickness_s1_rp1_cylinder", i - 1)),
             format_float_two_digit(Results.get_value_at("wall_thickness_s1_lox_cylinder", i - 1)),
             format_float_four_digit(Results.get_value_at("s1_sigma", i - 1)),
             format_float_one_digit(AstosOutput.stage1_tank_pressure),
@@ -102,11 +108,13 @@ def pdf(fold, i, material_stage1, material_stage2, material_stage3, material_int
             "STAGE 2",
             format_float_one_digit(Results.get_value_at("complete_length_s2", i - 1)),
             format_float_zero_digit(AstosOutput.S2_total_dry_mass),
+            format_float_zero_digit(Results.get_value_at('s2_tank_mass', i - 1)),
             format_float_zero_digit(AstosOutput.mass_stage2_prop),
             format_float_zero_digit(AstosOutput.residual_prop_s2),
             format_float_zero_digit(AstosOutput.vacuum_isp_s2),
             format_float_zero_digit(AstosOutput.vacuum_thrust_s2),
             format_float_two_digit(AstosOutput.engine_nozzle_exit_s2),
+            format_float_two_digit(Results.get_value_at("wall_thickness_s2_rp1_cylinder", i - 1)),
             format_float_two_digit(Results.get_value_at("wall_thickness_s2_lox_cylinder", i - 1)),
             format_float_four_digit(Results.get_value_at("s2_sigma", i - 1)),
             format_float_one_digit(AstosOutput.stage2_tank_pressure),
@@ -132,7 +140,7 @@ def pdf(fold, i, material_stage1, material_stage2, material_stage3, material_int
     # Create a PDF file and a plot for the table
     pdf_path = fold + "/Rocket_Parameters.pdf"
     with PdfPages(pdf_path) as pdf:
-        fig, ax = plt.subplots(figsize=(12, 8))  # Create a figure for the table
+        fig, ax = plt.subplots(figsize=(12, 10))  # Create a figure for the table
 
         # Hide the axes
         ax.axis("tight")
@@ -144,8 +152,8 @@ def pdf(fold, i, material_stage1, material_stage2, material_stage3, material_int
         # Colorize specific rows
         row_colors = {
             0: "lightblue",  # (STAGE 1 header)
-            14: "lightblue",  # (STAGE 2 header)
-            27: "lightblue",  # (STAGE 3 header)
+            16: "lightblue",  # (STAGE 2 header)
+            31: "lightblue",  # (STAGE 3 header)
         }
         for row, color in row_colors.items():
             for col_idx in range(len(df.columns)):

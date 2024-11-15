@@ -24,6 +24,7 @@ dependencies = [
     "lxml",
     "reportlab",
     "tqdm",
+    "sympy"
 ]
  
 [project.optional-dependencies]
@@ -35,6 +36,7 @@ dev = [
     "flake8>=7.0.0",
     "Flake8-pyproject>=1.2.3",
     "black>=24.3.0",
+    "ipython"
 ]
 docs = [
     "Sphinx>=7.2.6",

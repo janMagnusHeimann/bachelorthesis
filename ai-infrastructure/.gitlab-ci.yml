@@ -2,15 +2,17 @@ stages:
   - run-optimization
 
 variables:
-  MAX_ITER: "3"
+  MAX_ITER: "4"
   GTP_FILE: "/path/to/nominal_gtp_file"
+  DRIVE_FOLDER: "//DEAGSLW-FS.ad.rfa.space/RFA/PROJECT_MANAGEMENT/Mission_analysis/students/07_Marco/ROCKET_OPTIMIZER"
+
 
 before_script:
   # Update Python and install dependencies
   - python -m venv venv
   - .\venv\Scripts\activate
   - python -m pip install --upgrade pip
-  - pip install ".[dev, docs]"
+  - pip install .  # Install the required dependencies
 
 downhill-simplex_opt:
   stage: run-optimization
@@ -18,6 +20,31 @@ downhill-simplex_opt:
     - echo "Running rocketOptimizer..."
     - .\venv\Scripts\activate
     - rocketOptimizer $MAX_ITER # --gtp-file $GTP_FILE
+
+odin-astos_opt:
+  stage: run-optimization
+  script:
+    - echo "Running rocketOptimizer..."
+    - echo "Max Iter $MAX_ITER, Tanks material $MAT_TANKS, Interstages material $MAT_INTERSTAGES"
+    - Set-Variable -Name branch_name -Value "$env:CI_COMMIT_REF_NAME"
+    - Set-Variable -Name output_folder -Value "$env:DRIVE_FOLDER\$branch_name\$timestamp`_${env:MAX_ITER}iter`_tanks_$env:MAT_TANKS`_inter_$env:MAT_INTERSTAGES"
+    - Write-Host $output_folder
+    - New-Item -Path $output_folder -ItemType Directory
+    - .\venv\Scripts\activate
+    - rocketOptimizer $MAX_ITER --material-s1 $MAT_TANKS --material-s2 $MAT_TANKS --material-s3 $MAT_TANKS --material-is1 $MAT_INTERSTAGES --material-is2 $MAT_INTERSTAGES  # --gtp-file $GTP_FILE
+    - Copy-Item -Path .\Images_Out\plots.pdf -Destination $output_folder
+    - Copy-Item -Path .\Images_Out\Rocket_Parameters.pdf -Destination $output_folder
+    - Copy-Item -Path .\Images_Out\price_contributions.pdf -Destination $output_folder
+    - Move-Item -Path .\.loadCaseData\input_template.xlsx -Destination $output_folder
+    - Move-Item -Path .\.loadCaseData\Output_Report.xlsx -Destination $output_folder
+    - Move-Item -Path .\.input\* -Destination $output_folder
+    - Move-Item -Path .\.astos-batch-script\V20_NOM_long_lat_inc_iter\batchmaster\outFiles -Destination $output_folder
+  timeout: 3h
+  parallel:
+    matrix:
+      - MAT_TANKS: ["Steel", "Al", "CFK"]
+        MAT_INTERSTAGES: ["Steel", "Al", "CFK"]
+
   artifacts:
     paths:
       - Images_Out\plots.pdf
@@ -26,8 +53,8 @@ downhill-simplex_opt:
       - .loadCaseData\input_template.xlsx
       - .loadCaseData\Output_Report.xlsx
   only:
-    - nead-mead_loop
-    - main
+    - main  # Only run this pipeline when changes are pushed to the main branch
   environment:
     name: markus-workstation
   when: on_success  # Run only if previous steps (if any) succeeded
+

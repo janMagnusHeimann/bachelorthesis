@@ -52,8 +52,10 @@ def distances_nozzle_exit_plane(s1_tank_length, s2_tank_length):
     # AstosOutput.d_n_stage1_bottom_tank_head = AstosOutput.rocket_diameter * 0.895 + (
     #     s1_tank_length) + AstosOutput.rocket_diameter * 1.4 + s2_tank_length + AstosOutput.rocket_diameter * 0.8
     AstosOutput.d_n_stage1__stage2_interstage_bottom = AstosOutput.rocket_diameter * 0.895 + (
-        s1_tank_length) + AstosOutput.rocket_diameter * 1.4 + s2_tank_length + AstosOutput.rocket_diameter * 0.8
+        s1_tank_length)  # + AstosOutput.rocket_diameter * 1.4 + s2_tank_length + AstosOutput.rocket_diameter * 0.8
     AstosOutput.d_n_stage1__stage2_interstage_flange = AstosOutput.rocket_diameter * 0.895 + (
-        s1_tank_length) + AstosOutput.rocket_diameter * 1.4 + s2_tank_length + AstosOutput.rocket_diameter * 0.8
+        s1_tank_length) + AstosOutput.rocket_diameter * 1.4  # + s2_tank_length + AstosOutput.rocket_diameter * 0.8
+    AstosOutput.d_n_stage2__fairing_interstage_bottom = AstosOutput.rocket_diameter * 0.895 + (
+        s1_tank_length) + AstosOutput.rocket_diameter * 1.4 + s2_tank_length  # + AstosOutput.rocket_diameter * 0.8
     AstosOutput.d_n_stage2__fairing_interstage_flange = AstosOutput.rocket_diameter * 0.895 + (
         s1_tank_length) + AstosOutput.rocket_diameter * 1.4 + s2_tank_length + AstosOutput.rocket_diameter * 0.8

@@ -6,7 +6,6 @@ from tkinter import Tk
 import numpy as np
 import pandas as pd
 import xlsxwriter
-# from sphinx.addnodes import index
 
 
 def loadCaseGenerator(s1_tank_diameter):
@@ -239,11 +238,8 @@ def combine_inert_and_propellant_masses(inert_table, propellant_table):
     return mass_table
 
 
-def combine_inertial_and_aero_forces(GP, D_core, L_s1_blk_bot, L_s1_blk_top, L_s2_blk_bot, L_s2_blk_top, p_s1, p_s2,
-                                     T_x, T_z, x_aft, I_aft_z, x_fwd, I_fwd_x, I_fwd_z, aero_forces, inertial_forces):
-    A = np.pi / 4 * D_core ** 2
-    axial_forces = [[GP, T_x], [x_fwd, I_fwd_x], [L_s1_blk_bot, -p_s1 * A], [L_s1_blk_top, p_s1 * A],
-                    [L_s2_blk_bot, -p_s2 * A], [L_s2_blk_top, p_s2 * A], ]
+def combine_inertial_and_aero_forces(GP, T_x, T_z, x_aft, I_aft_z, x_fwd, I_fwd_x, I_fwd_z, aero_forces, inertial_forces):
+    axial_forces = [[GP, T_x], [x_fwd, I_fwd_x]]
     lateral_forces = [[GP, T_z], [x_aft, I_aft_z], [x_fwd, I_fwd_z]]
     for force in aero_forces:
         axial_forces.append([force[0], 0.0])
@@ -296,12 +292,14 @@ def distribute_propellant_masses(no_of_sections, D, L_s1_blk_bot, L_s1_blk_mid, 
 
 
 def excel_create_chart(sheet_name, chart_title, x_axis_name, y_axis_name, L, workbook, data):
-    x_max = (int(L / 5) + 1) * 5
 
     y_data = np.array(data)
-    filtered_y_values = y_data[(y_data[:, 0] <= x_max), 1:]
+    filtered_y_values = y_data[(y_data[:, 0] <= L), 1:]
     y_max = np.max(filtered_y_values)
+    y_min = np.min(filtered_y_values)
+    x_max = (int(L / 5) + 1) * 5
     y_max = (int(1.05*y_max / 5) + 1) * 5
+    y_min = (int(1.05*y_min / 5) + 1) * 5
 
     chart = workbook.add_chart({"type": "scatter", "subtype": "straight"})
 
@@ -320,7 +318,7 @@ def excel_create_chart(sheet_name, chart_title, x_axis_name, y_axis_name, L, wor
 
     chart.set_x_axis({"name": x_axis_name, "minor_gridlines": {"visible": True}, "num_format": "0", "max": x_max, })
 
-    chart.set_y_axis({"name": y_axis_name, "minor_gridlines": {"visible": True}, "num_format": "0", "max": y_max, })
+    chart.set_y_axis({"name": y_axis_name, "minor_gridlines": {"visible": True}, "num_format": "0", "min": y_min, "max": y_max, })
     return chart
 
 
@@ -886,10 +884,8 @@ def vloads(inputs, alt, machNo, t_maxQ, rocket_conf_table, inert_mass_table):
                                                                                              alpha_TVC, x_aft, x_fwd, )
 
     inertial_forces = calculate_inertial_forces(mass_table_core, g_x, g_z)
-    axial_forces, lateral_forces = combine_inertial_and_aero_forces(GP, D_core, L_s1_blk_bot, L_s1_blk_top,
-                                                                    L_s2_blk_bot, L_s2_blk_top, p_s1, p_s2, T_x, T_z,
-                                                                    x_aft, I_aft_z, x_fwd, I_fwd_x, I_fwd_z,
-                                                                    aero_forces_core, inertial_forces, )
+    axial_forces, lateral_forces = combine_inertial_and_aero_forces(GP, T_x, T_z, x_aft, I_aft_z, x_fwd, I_fwd_x,
+                                                                    I_fwd_z, aero_forces_core, inertial_forces, )
     axial_loads = calculate_axial_loads(axial_forces, L_core)
     shear_loads = calculate_shear_loads(lateral_forces)
     bending_moments = calculate_bending_moments(shear_loads)
@@ -911,12 +907,12 @@ def vloads(inputs, alt, machNo, t_maxQ, rocket_conf_table, inert_mass_table):
         x_next = -9999
         # x = rocket_conf_table[0][0]
         radius = rocket_conf_table[0][1] * 1e-3
-        wall_thickness = rocket_conf_table[0][2] * 1e-3
+        wall_thickness = rocket_conf_table[0][2] * 1e-3  # TODO: either update the excel with real thickness or get rid of it
 
-        if x_target > L_s1_blk_bot and x_target < L_s1_blk_top:
-            p_internal = rocket_conf_table[0][3] * 1e5
-        elif x_target > L_s2_blk_bot and x_target < L_s2_blk_top:
-            p_internal = rocket_conf_table[0][3] * 1e5
+        if L_s1_blk_bot < x_target < L_s1_blk_top:
+            p_internal = rocket_conf_table[0][3] * 1e5  # TODO: either update the excel with real pressure or get rid of it
+        elif L_s2_blk_bot < x_target < L_s2_blk_top:
+            p_internal = rocket_conf_table[0][3] * 1e5  # TODO: either update the excel with real pressure or get rid of it
         else:
             p_internal = 0.0
 
@@ -1190,17 +1186,17 @@ def loadCaseCalculator():
     # TODO fix the ylimits of the excel charts
     chart_ax = excel_create_chart("Axial_Load_Data", "Distribution of axial load along the rocket",
                                   "Distance from Stage 1 nozzle exit plane [m]", "Section Axial Load [kN]", L_launcher,
-                                  workbook, axial_loads_worst)
+                                  workbook, [[x, y*1e-3] for x, y in axial_loads_worst])
     wkst5.set_chart(chart_ax)
 
     chart_shear = excel_create_chart("Shear_Load_Data", "Distribution of shear load along the rocket",
                                      "Distance from Stage 1 nozzle exit plane [m]", "Section Shear Load [kN]",
-                                     L_launcher, workbook, shear_loads_worst)
+                                     L_launcher, workbook, [[x, y*1e-3] for x, y in shear_loads_worst])
     wkst6.set_chart(chart_shear)
 
     chart_bend = excel_create_chart("Bending_Mom_Data", "Distribution of bending moment along the rocket",
                                     "Distance from Stage 1 nozzle exit plane [m]", "Section Bending Moment [kNm]",
-                                    L_launcher, workbook, bending_moments_worst)
+                                    L_launcher, workbook, [[x, y*1e-3] for x, y in bending_moments_worst])
     wkst7.set_chart(chart_bend)
 
     chart_mos = excel_create_chart("Margin_of_Safety_Data", "Distribution of margin of safety along the rocket",

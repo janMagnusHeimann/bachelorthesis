@@ -46,6 +46,7 @@ def costfunction(sigmas, i):
         "./Images_Out/",
         "Steel",  # s1
         "Steel",  # s2
+        "Steel",  # s3
         "CFK",   # i1
         "CFK",  # i2
         i,
@@ -62,6 +63,7 @@ def costfunction(sigmas, i):
             "./Images_Out/",
             "Steel",  # s1
             "Steel",  # s2
+            "Steel",  # s3
             "CFK",   # i1
             "CFK",  # i2
             i,
